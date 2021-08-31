@@ -16,7 +16,7 @@ import { config } from './config'
 import { AppModule } from './app'
 
 // 是否是开发环境
-const IS_DEV = config.NODE_ENV === 'development'
+const IS_DEV = config.APP.ENV === 'development'
 
 /**
  * 应用启动器
@@ -29,7 +29,7 @@ export async function bootstrap(): Promise<void> {
   if (IS_DEV) {
     genSwaggerDocument(app)
   }
-  await app.listen(config.NEST_LISTEN_PORT,() => process.stdout.write(`Server launched!🚀\n`))
+  await app.listen(config.APP.LISTEN_PORT,() => process.stdout.write(`Server launched!🚀\n`))
 }
 
 /**
@@ -59,8 +59,8 @@ function registerGlobalPlugins(app: NestApplication | NestExpressApplication) {
  */
 function genSwaggerDocument(app: NestApplication | NestExpressApplication) {
   const options = new DocumentBuilder()
-    .setTitle(`${config.PROJECT_NAME.toUpperCase()} API 文档`)
-    .setVersion(`v${config.PROJECT_VERSION}`)
+    .setTitle(`${config.APP.CHINESE_NAME.toUpperCase()} API 文档`)
+    .setVersion(`v${config.APP.CHINESE_NAME}`)
     .setDescription('无')
     .addBearerAuth('Authorization', 'header')
     .build()

@@ -6,9 +6,10 @@
  */
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { RedisModule } from 'nestjs-redis'
 
 import { LoggerMiddleware } from '@/middlewares/logger.middleware'
-import { typeOrmOptions } from '@/libs/db'
+import { typeOrmOptions,redisOptions } from '@/libs/db'
 // 业务子模块
 import { CatsModule } from './cats/cats.modules'
 import { UserModule } from './user/user.module'
@@ -17,6 +18,8 @@ import { UserModule } from './user/user.module'
   imports: [
     // 数据库模块
     TypeOrmModule.forRoot(typeOrmOptions),
+    // Redis 连接模块
+    // RedisModule.register(redisOptions),
     // 子模块
     CatsModule,
     UserModule,

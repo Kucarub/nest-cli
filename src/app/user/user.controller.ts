@@ -26,7 +26,6 @@ import { UserRepository } from '@/repositories/user.repository'
 import { UserService } from './user.service'
 import { SysRoleEntity as User } from '@/entities/SysRole.entity'
 import {
-  test,
   UserRegisterDto,
 } from './user.dto'
 
@@ -52,9 +51,7 @@ export class UserController {
   @Post('save')
   @ApiOkResponse({ description: '查询成功', type: User })
   @ApiBadRequestResponse({ description: '查询失败' })
-  saveTest(@Body() dto:test):Promise<void>{
-    console.log(dto.username)
-    console.log(dto.password)
+  saveTest(@Body() dto:UserRegisterDto):Promise<void>{
     return
     // return this.UserService.testSave(dto)
   }

@@ -8,12 +8,11 @@ import { join } from 'path'
 import { appendFileSync } from 'fs'
 import * as shell from 'shelljs'
 import * as Moment from 'moment'
+import { config } from '@/config'
 
-import { logger } from '@/config'
+shell.mkdir('-p', config.APP.STATIC_LOCAL_PATH)
 
-shell.mkdir('-p', logger.STATIC_LOCAL_PATH)
-
-const LOGGER_FILE = join(logger.STATIC_LOCAL_PATH, '.log')
+const LOGGER_FILE = join(config.APP.STATIC_LOCAL_PATH, '.log')
 
 export default class Logger {
   static append(str: string) {
