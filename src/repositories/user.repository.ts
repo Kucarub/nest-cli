@@ -7,7 +7,7 @@
 
 import { EntityRepository } from 'typeorm'
 import { MyRepository } from './base.repository'
-import { SysRoleEntity as User } from '@/entities/SysRole.entity'
+import { UserEntity } from '@/entities/User.entity'
 
-@EntityRepository(User)
-export class UserRepository extends MyRepository<User> {}
+@EntityRepository(UserEntity)
+export class UserRepository extends MyRepository<UserEntity> {}

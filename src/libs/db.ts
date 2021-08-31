@@ -4,7 +4,7 @@
  * @LastEditTime: 2019-07-11 13:50:53
  * @Description: TypeOrm 数据库配置对象
  */
-// tslint:disable: radix
+
 import { join } from 'path'
 import { TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { config } from '@/config'
@@ -13,7 +13,7 @@ import { config } from '@/config'
 export const typeOrmOptions: TypeOrmModuleOptions = {
   type: 'mysql',
   host: config.MYSQL.HOST,
-  port: parseInt(config.MYSQL.PORT),
+  port: parseInt(config.MYSQL.PORT, 10),
   username: config.MYSQL.USER,
   password: config.MYSQL.PASSWORD,
   database: config.MYSQL.DATABASE,
@@ -24,6 +24,6 @@ export const typeOrmOptions: TypeOrmModuleOptions = {
 
 export const redisOptions = {
   host: config.REDIS.REDIS_HOST,
-  port: parseInt(config.REDIS.REDIS_PORT),
+  port: parseInt(config.REDIS.REDIS_PORT, 10),
   db: 0,
 }

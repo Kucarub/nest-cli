@@ -1,25 +1,23 @@
-/*
- * @Author: Cphayim
- * @Date: 2019-07-10 09:47:48
- * @LastEditTime: 2019-07-10 16:41:26
- * @Description:
- */
-import { Entity, Column, OneToOne, OneToMany } from 'typeorm'
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
 import { Cat } from './cat.entity'
 
-@Entity()
-export class Master {
-  @Column({ primary: true, generated: 'increment' })
+@Entity('master', { schema: 'db' })
+export class Master extends BaseEntity {
+  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number
 
-  @Column({ length: 10 })
+  @Column('varchar', { name: 'name', length: 10 })
   name: string
 
-  @Column('tinyint')
+  @Column('tinyint', { name: 'grand' })
   grand: number
 
-  @OneToMany(type => Cat, cat => cat.master, {
-    cascade: true,
-  })
+  @OneToMany(() => Cat, (cat) => cat.master)
   cats: Cat[]
 }

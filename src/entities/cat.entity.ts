@@ -1,32 +1,36 @@
-/*
- * @Author: Cphayim
- * @Date: 2019-07-10 09:47:48
- * @LastEditTime: 2019-08-16 16:15:01
- * @Description:
- */
-import { Entity, Column, OneToOne, ManyToOne } from 'typeorm'
-import { CatMetadata } from './cat-metadata.entity'
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
 import { Master } from './master.entity'
+import { CatMetadata } from './cat-metadata.entity'
 
-@Entity()
-export class Cat {
-  @Column({ primary: true, generated: 'increment' })
+@Entity('cat', { schema: 'db' })
+export class Cat extends BaseEntity {
+  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number
 
-  @Column({ length: 10 })
+  @Column('varchar', { name: 'name', length: 10 })
   name: string
 
-  @Column('int')
+  @Column('int', { name: 'age' })
   age: number
 
-  @Column()
+  @Column('varchar', { name: 'breed', length: 255 })
   breed: string
 
-  @OneToOne(type => CatMetadata, catMetadata => catMetadata.cat, {
-    cascade: true,
+  @ManyToOne(() => Master, (master) => master.cats, {
+    onDelete: 'NO ACTION',
+    onUpdate: 'NO ACTION',
   })
-  metadata: CatMetadata
-
-  @ManyToOne(type => Master, master => master.cats)
+  @JoinColumn([{ name: 'masterId', referencedColumnName: 'id' }])
   master: Master
+
+  @OneToOne(() => CatMetadata, (catMetadata) => catMetadata.cat)
+  catMetadata: CatMetadata
 }

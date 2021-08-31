@@ -1,22 +1,22 @@
-import { Entity, Column } from 'typeorm'
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
-@Entity()
-export class Photo {
-  @Column({ primary: true, generated: 'increment' })
+@Entity('photo', { schema: 'db' })
+export class PhotoEntity extends BaseEntity {
+  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number
 
-  @Column({ length: 100 })
+  @Column('varchar', { name: 'name', length: 100 })
   name: string
 
-  @Column('text')
+  @Column('text', { name: 'description' })
   description: string
 
-  @Column()
+  @Column('varchar', { name: 'filename', length: 255 })
   filename: string
 
-  @Column('int')
+  @Column('int', { name: 'views' })
   views: number
 
-  @Column()
-  isPublished: boolean
+  @Column('tinyint', { name: 'isPublished' })
+  isPublished: number
 }

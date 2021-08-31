@@ -1,24 +1,28 @@
-/*
- * @Author: Cphayim
- * @Date: 2019-07-10 09:47:48
- * @LastEditTime: 2019-07-10 14:16:19
- * @Description:
- */
-import { Entity, Column, OneToOne, JoinColumn } from 'typeorm'
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
 import { Cat } from './cat.entity'
 
-@Entity()
-export class CatMetadata {
-  @Column({ primary: true, generated: 'increment' })
+@Entity('cat_metadata', { schema: 'db' })
+export class CatMetadata extends BaseEntity {
+  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number
 
-  @Column('int')
+  @Column('int', { name: 'width' })
   width: number
 
-  @Column('int')
+  @Column('int', { name: 'height' })
   height: number
 
-  @OneToOne(type => Cat, cat => cat.metadata)
-  @JoinColumn()
+  @OneToOne(() => Cat, (cat) => cat.catMetadata, {
+    onDelete: 'NO ACTION',
+    onUpdate: 'NO ACTION',
+  })
+  @JoinColumn([{ name: 'catId', referencedColumnName: 'id' }])
   cat: Cat
 }

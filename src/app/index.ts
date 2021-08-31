@@ -9,7 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { RedisModule } from 'nestjs-redis'
 
 import { LoggerMiddleware } from '@/middlewares/logger.middleware'
-import { typeOrmOptions,redisOptions } from '@/libs/db'
+import { typeOrmOptions, redisOptions } from '@/libs/db'
 // 业务子模块
 import { CatsModule } from './cats/cats.modules'
 import { UserModule } from './user/user.module'
@@ -22,7 +22,7 @@ import { UserModule } from './user/user.module'
     // RedisModule.register(redisOptions),
     // 子模块
     CatsModule,
-    UserModule,
+    // UserModule,
   ],
   controllers: [],
   providers: [],

@@ -24,7 +24,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm'
 import { UserRepository } from '@/repositories/user.repository'
 import { UserService } from './user.service'
-import { SysRoleEntity as User } from '@/entities/SysRole.entity'
+import { UserEntity } from '@/entities/User.entity'
 import {
   UserRegisterDto,
 } from './user.dto'
@@ -32,27 +32,19 @@ import {
 @Controller('user')
 export class UserController {
   constructor(
-    private readonly UserService: UserService,
-  ) {}
-  @Get('findTest/:id')
-  findTest(@Param('id',ParseIntPipe)id:number):Promise<UserRegisterDto> {
-    return this.UserService.test(id)
-
-    // throw new HttpException(
-    //   {
-    //     status: HttpStatus.FORBIDDEN,
-    //     message: 'This is a custom message',
-    //   },
-    //   HttpStatus.FORBIDDEN,
-    // )
-    // console.log(new HttpException('a', HttpStatus.INTERNAL_SERVER_ERROR) instanceof Error)
-    // throw new ForbiddenException({ hh: '1' })
+    private readonly userService: UserService,
+  ) {
   }
+
+  @Get('findTest/:id')
+  findTest(@Param('id', ParseIntPipe)id: number): Promise<UserRegisterDto> {
+    return this.userService.test(id)
+  }
+
   @Post('save')
-  @ApiOkResponse({ description: '查询成功', type: User })
+  @ApiOkResponse({ description: '查询成功', type: UserEntity })
   @ApiBadRequestResponse({ description: '查询失败' })
-  saveTest(@Body() dto:UserRegisterDto):Promise<void>{
-    return
-    // return this.UserService.testSave(dto)
+  saveTest(@Body() dto: UserRegisterDto): Promise<UserRegisterDto> {
+    return this.userService.testSave(dto)
   }
 }

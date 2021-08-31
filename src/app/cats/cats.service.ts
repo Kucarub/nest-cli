@@ -18,7 +18,8 @@ export class CatsService {
     private readonly catMetadataRepository: Repository<CatMetadata>,
     @InjectRepository(Master)
     private readonly masterRepository: Repository<Master>,
-  ) {}
+  ) {
+  }
 
   async create(dto: CreateCatDto) {
     // this.cats.push(cat)
@@ -32,7 +33,7 @@ export class CatsService {
     metadata.height = 500
     // metadata.cat = cat
 
-    cat.metadata = metadata
+    cat.catMetadata = metadata
 
     await this.catRepository.save(cat)
     // await this.catMetadataRepository.save(metadata)

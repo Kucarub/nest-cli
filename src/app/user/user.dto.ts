@@ -6,13 +6,12 @@
  */
 import { IsString, Length, Validate, IsNumber, IsOptional, IsEnum } from 'class-validator'
 import { ApiModelProperty } from '@nestjs/swagger'
-import { SysRoleEntity as User } from '@/entities/SysRole.entity'
-
+import { UserEntity } from '@/entities/User.entity'
 
 /**
  * 注册 DTO
  * @Request
  */
-export class UserRegisterDto extends User{
-  
+export class UserRegisterDto extends UserEntity {
+
 }
