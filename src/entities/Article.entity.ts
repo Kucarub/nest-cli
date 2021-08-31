@@ -8,29 +8,8 @@ import {
 } from 'typeorm'
 import { UserEntity } from './User.entity'
 
-@Entity('article', { schema: 'db' })
+@Entity('article', { schema: 'dbnest' })
 export class ArticleEntity extends BaseEntity {
-  @Column('tinyint', {
-    name: 'is_active',
-    comment: '状态，用于软删除',
-  })
-  isActive: number
-
-  @Column('int', { name: 'score_value', comment: '分值', default: () => '\'5\'' })
-  scoreValue: number
-
-  @Column('int', {
-    name: 'view_num',
-    comment: '查看次数',
-  })
-  viewNum: number
-
-  @Column('int', {
-    name: 'download_num',
-    comment: '下载次数',
-  })
-  downloadNum: number
-
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number
 
@@ -45,6 +24,12 @@ export class ArticleEntity extends BaseEntity {
     comment: '更新时间',
   })
   updateTime: Date
+
+  @Column('tinyint', {
+    name: 'is_active',
+    comment: '状态，用于软删除',
+  })
+  isActive: number
 
   @Column('enum', {
     name: 'type',
@@ -72,6 +57,9 @@ export class ArticleEntity extends BaseEntity {
   })
   description: string | null
 
+  @Column('int', { name: 'score_value', comment: '分值' })
+  scoreValue: number
+
   @Column('text', { name: 'content', comment: 'markdown 内容' })
   content: string
 
@@ -83,6 +71,18 @@ export class ArticleEntity extends BaseEntity {
   })
   file: string | null
 
+  @Column('int', {
+    name: 'view_num',
+    comment: '查看次数',
+  })
+  viewNum: number
+
+  @Column('int', {
+    name: 'download_num',
+    comment: '下载次数',
+  })
+  downloadNum: number
+
   @Column('datetime', {
     name: 'publish_time',
     comment: '发布时间',
@@ -90,8 +90,8 @@ export class ArticleEntity extends BaseEntity {
   publishTime: Date
 
   @ManyToOne(() => UserEntity, (user) => user.articles, {
-    onDelete: 'NO ACTION',
-    onUpdate: 'NO ACTION',
+    onDelete: 'RESTRICT',
+    onUpdate: 'RESTRICT',
   })
   @JoinColumn([{ name: 'uid', referencedColumnName: 'id' }])
   u: UserEntity

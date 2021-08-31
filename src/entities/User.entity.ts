@@ -3,40 +3,38 @@ import {
   Column,
   Entity,
   Index,
+  CreateDateColumn,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
 import { ArticleEntity } from './Article.entity'
 
 @Index('IDX_78a916df40e02a9deb1c4b75ed', ['username'], { unique: true })
-@Entity('user', { schema: 'db' })
+@Entity('user', { schema: 'dbnest' })
 export class UserEntity extends BaseEntity {
-  @Column('tinyint', {
-    name: 'is_active',
-    comment: '状态，用于软删除',
-  })
-  isActive: number
-
-  @Column('int', { name: 'score', comment: '积分' })
-  score: number
-
-  @Column('int', { name: 'sn', nullable: true })
-  sn: number | null
-
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number
 
-  @Column('datetime', {
+  @CreateDateColumn({
     name: 'create_time',
     comment: '创建时间',
+    select: false,
   })
   createTime: Date
 
-  @Column('datetime', {
+  @CreateDateColumn({
     name: 'update_time',
     comment: '更新时间',
+    select: false,
   })
   updateTime: Date
+
+  @Column('tinyint', {
+    name: 'is_active',
+    comment: '状态，用于软删除',
+    default: () => 1,
+  })
+  isActive: number
 
   @Column('varchar', {
     name: 'username',
@@ -64,8 +62,19 @@ export class UserEntity extends BaseEntity {
     name: 'role',
     comment: '角色',
     enum: ['0', '1', '8', '9'],
+    default: '1',
   })
   role: '0' | '1' | '8' | '9'
+
+  @Column('int', {
+    name: 'score',
+    comment: '积分',
+    default: () => 0,
+  })
+  score: number
+
+  @Column('int', { name: 'sn', nullable: true, comment: '个人编号' })
+  sn: number | null
 
   @OneToMany(() => ArticleEntity, (article) => article.u)
   articles: ArticleEntity[]
