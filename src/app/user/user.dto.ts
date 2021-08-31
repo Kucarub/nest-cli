@@ -13,5 +13,18 @@ import { UserEntity } from '@/entities/User.entity'
  * @Request
  */
 export class UserRegisterDto extends UserEntity {
+  @ApiModelProperty({ description: '用户名' })
+  @IsString()
+  @Length(1, 20)
+  readonly username: string
 
+  @ApiModelProperty({ description: '密码' })
+  @IsString()
+  @Length(6, 32)
+  readonly password: string
+
+  @ApiModelProperty({ description: ' 昵称' })
+  @IsString()
+  @Length(1, 20)
+  readonly nickname: string
 }

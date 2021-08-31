@@ -5,7 +5,7 @@
   "author": "clark",
   "license": "MIT",
   "scripts": {
-    "createEntities": "rimraf entities & typeorm-model-generator -h 127.0.0.1 -d db -p 3306 -u root -x root -e mysql -o ./src/entities --noConfig true --ce pascal --cp camel -a",
+    "createEntities": "rimraf entities & typeorm-model-generator -h 127.0.0.1 -d dbnest -p 3306 -u root -x root -e mysql -o ./src/entities --noConfig true --ce pascal --cp camel -a",
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\"",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",

@@ -30,9 +30,12 @@ import {
 } from './user.dto'
 
 @Controller('user')
+@ApiUseTags('用户模块')
 export class UserController {
   constructor(
     private readonly userService: UserService,
+    // @InjectRepository(UserEntity)
+    // private readonly userRepository: UserRepository,
   ) {
   }
 
@@ -41,8 +44,15 @@ export class UserController {
     return this.userService.test(id)
   }
 
-  @Post('save')
-  @ApiOkResponse({ description: '查询成功', type: UserEntity })
+  @Post('/register')
+  @ApiOkResponse({ description: '注册成功', type: UserEntity })
+  @ApiBadRequestResponse({ description: '用户名重复' })
+  async register(@Body() dto: UserRegisterDto): Promise<UserEntity> {
+    return await this.userService.createUser(dto)
+  }
+
+  @Post('login')
+  @ApiOkResponse({ description: '登录成功', type: UserEntity })
   @ApiBadRequestResponse({ description: '查询失败' })
   saveTest(@Body() dto: UserRegisterDto): Promise<UserRegisterDto> {
     return this.userService.testSave(dto)

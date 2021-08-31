@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { Inject, Injectable, BadRequestException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import {
   UserRegisterDto,
@@ -21,6 +21,21 @@ export class UserService {
     const test = await this.userRepository.findOne({ where: { id } })
     Logger.append(`cpass<uid:${id}>`)
     return test
+  }
+
+  /**
+   * 创建新用户
+   * 1. 检查用户名是否重复
+   */
+  async createUser(dto: UserRegisterDto): Promise<UserRegisterDto> {
+    // 判断用户名的可用性
+    const isExist = await this.userRepository.findOne({ where: { username: dto.username } })
+    if (isExist) {
+      throw new BadRequestException(`username \`${dto.username}\` is existed.`)
+    }
+    const user = await this.userRepository.create(dto)
+    Logger.append(`${user}`)
+    return await user.save()
   }
 
   /**
