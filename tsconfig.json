@@ -3,7 +3,7 @@
     "target": "es2017",
     "module": "commonjs",
     "declaration": true,
-    "removeComments": true,
+    "removeComments": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
@@ -14,7 +14,9 @@
         "./src/*"
       ]
     },
-    "incremental": true
+    "incremental": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true
   },
   "exclude": [
     "node_modules",

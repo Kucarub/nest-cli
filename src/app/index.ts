@@ -12,6 +12,7 @@ import { LoggerMiddleware } from '@/middlewares/logger.middleware'
 import { typeOrmOptions, redisOptions } from '@/libs/db'
 // 业务子模块
 import { UserModule } from './user/user.module'
+import { AuthModule } from './auth/auth.module'
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { UserModule } from './user/user.module'
     // RedisModule.register(redisOptions),
     // 子模块
     UserModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

@@ -35,7 +35,7 @@ export class UserService {
    * 验证用户名和密码
    * 正确的情况下返回用户实体
    */
-  async verify(dto: UserLoginDto): Promise<boolean> {
+  async verify(dto: UserLoginDto): Promise<UserEntity> {
     const user = await this.userRepository.findOne({
       where: {
         username: dto.username,
@@ -47,6 +47,19 @@ export class UserService {
       throw new BadRequestException('用户名或密码错误')
     }
     Logger.append(`userLogin<uid:${user.id}>:<username:${user.username}>`)
-    return true
+    return user
+  }
+
+  /**
+   * 查询单个用户信息
+   * 验证token
+   * 正确的情况下返回用户实体
+   */
+  async findUserInfoById(id: string): Promise<UserEntity> {
+    const user = await this.userRepository.findOne({ where: { id } })
+    if (!user) {
+      throw new BadRequestException('用户不存在')
+    }
+    return user
   }
 }

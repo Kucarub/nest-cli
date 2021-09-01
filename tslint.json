@@ -15,7 +15,8 @@
     "arrow-parens": false,
     "object-literal-sort-keys": false,
     "semicolon": false,
-    "no-console": false
+    "no-console": false,
+    "no-duplicate-variable": false
   },
   "rulesDirectory": []
 }

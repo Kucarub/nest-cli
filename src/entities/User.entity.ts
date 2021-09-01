@@ -8,7 +8,13 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm'
 import { ArticleEntity } from './Article.entity'
-
+// 用户角色
+export enum UserRole {
+  Prisoner = 0, // 小黑屋成员：被静止访问的人
+  Member = 1, // 成员
+  Admin = 8, // 管理员
+  SuperAdmin = 9, // 超级管理员
+}
 @Index('IDX_78a916df40e02a9deb1c4b75ed', ['username'], { unique: true })
 @Entity('user', { schema: 'dbnest' })
 export class UserEntity extends BaseEntity {
@@ -61,10 +67,10 @@ export class UserEntity extends BaseEntity {
   @Column('enum', {
     name: 'role',
     comment: '角色',
-    enum: ['0', '1', '8', '9'],
-    default: '1',
+    enum: UserRole,
+    default: UserRole.Member,
   })
-  role: '0' | '1' | '8' | '9'
+  role: UserRole
 
   @Column('int', {
     name: 'score',
