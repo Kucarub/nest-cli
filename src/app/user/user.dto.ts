@@ -28,3 +28,17 @@ export class UserRegisterDto extends UserEntity {
   @Length(1, 20)
   readonly nickname: string
 }
+
+/**
+ * 登录 DTO
+ * @Request
+ */
+export class UserLoginDto {
+  @ApiModelProperty({ description: '用户名' })
+  @IsString()
+  readonly username: string
+
+  @ApiModelProperty({ description: '密码' })
+  @IsString()
+  readonly password: string
+}

@@ -27,6 +27,7 @@ import { UserService } from './user.service'
 import { UserEntity } from '@/entities/User.entity'
 import {
   UserRegisterDto,
+  UserLoginDto,
 } from './user.dto'
 
 @Controller('user')
@@ -39,11 +40,6 @@ export class UserController {
   ) {
   }
 
-  @Get('findTest/:id')
-  findTest(@Param('id', ParseIntPipe)id: number): Promise<UserRegisterDto> {
-    return this.userService.test(id)
-  }
-
   @Post('/register')
   @ApiOkResponse({ description: '注册成功', type: UserEntity })
   @ApiBadRequestResponse({ description: '用户名重复' })
@@ -53,8 +49,8 @@ export class UserController {
 
   @Post('login')
   @ApiOkResponse({ description: '登录成功', type: UserEntity })
-  @ApiBadRequestResponse({ description: '查询失败' })
-  saveTest(@Body() dto: UserRegisterDto): Promise<UserRegisterDto> {
-    return this.userService.testSave(dto)
+  @ApiBadRequestResponse({ description: '用户名或密码错误' })
+  async saveTest(@Body() dto: UserLoginDto): Promise<boolean> {
+    return await this.userService.verify(dto)
   }
 }

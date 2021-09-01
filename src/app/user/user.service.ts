@@ -2,6 +2,7 @@ import { Inject, Injectable, BadRequestException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import {
   UserRegisterDto,
+  UserLoginDto,
 } from './user.dto'
 import { UserRepository } from '@/repositories/user.repository'
 import { UserEntity } from '@/entities/User.entity'
@@ -15,15 +16,6 @@ export class UserService {
   }
 
   /**
-   * test
-   */
-  async test(id: number): Promise<UserRegisterDto> {
-    const test = await this.userRepository.findOne({ where: { id } })
-    Logger.append(`cpass<uid:${id}>`)
-    return test
-  }
-
-  /**
    * 创建新用户
    * 1. 检查用户名是否重复
    */
@@ -34,16 +26,27 @@ export class UserService {
       throw new BadRequestException(`username \`${dto.username}\` is existed.`)
     }
     const user = await this.userRepository.create(dto)
-    Logger.append(`${user}`)
+    Logger.append(`createUser<uid:${user.id}>:<username:${user.username}>`)
     return await user.save()
   }
 
   /**
-   * testSave
+   * 登录
+   * 验证用户名和密码
+   * 正确的情况下返回用户实体
    */
-  async testSave(user: UserEntity): Promise<UserRegisterDto> {
-    const res = await this.userRepository.save(user)
-    Logger.append(`save<info:${res}>`)
-    return res
+  async verify(dto: UserLoginDto): Promise<boolean> {
+    const user = await this.userRepository.findOne({
+      where: {
+        username: dto.username,
+        // 密码在查询时会自动加密，无需手动加密（查看 User 实体定义）
+        password: dto.password,
+      },
+    })
+    if (!user) {
+      throw new BadRequestException('用户名或密码错误')
+    }
+    Logger.append(`userLogin<uid:${user.id}>:<username:${user.username}>`)
+    return true
   }
 }
