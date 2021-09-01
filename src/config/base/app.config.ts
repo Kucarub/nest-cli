@@ -39,7 +39,7 @@ export class LocalEnvAppConfig implements AppConfig {
   // 使用外部的端口号
   LISTEN_PORT = process.env.NEST_LISTEN_PORT
   SECRET_KEY = process.env.APP_SECRET_KEY
-  TOKEN_EXPIRES = 7 * 24 * 3600 // 24h
+  TOKEN_EXPIRES = 24 * 3600 // 24h
   ROOT_LOCAL_PATH = join(__dirname, '..', '..', '..')
   STATIC_LOCAL_PATH = join(this.ROOT_LOCAL_PATH, 'data', 'oss')
   STATIC_SITE_PREFIX = '/oss'

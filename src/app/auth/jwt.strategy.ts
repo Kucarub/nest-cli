@@ -21,7 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       jwtFromRequest: ExtractJwt.fromHeader('token'),
       secretOrKey: config.APP.SECRET_KEY,
       // 自动拒绝过期的 token
-      ignoreExpiration: true,
+      ignoreExpiration: false,
     })
   }
 

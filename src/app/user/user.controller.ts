@@ -2,10 +2,11 @@ import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common'
 import { ApiBadRequestResponse, ApiOkResponse, ApiUseTags } from '@nestjs/swagger'
 import { UserService } from './user.service'
 import { AuthService } from '@/app/auth/auth.service'
-import { UserEntity } from '@/entities/User.entity'
+import { UserEntity, UserRole } from '@/entities/User.entity'
 import { UserLoginDto, UserRegisterDto } from './user.dto'
 import { TokenDto } from '@/app/auth/auth.dto'
 import { AuthGuard } from '@nestjs/passport'
+import { Authorization } from '@/decorators/auth.decorator'
 
 @Controller('user')
 @ApiUseTags('用户模块')
@@ -33,9 +34,15 @@ export class UserController {
     return await this.authService.signToken(user)
   }
 
-  @UseGuards(AuthGuard('jwt'))
-  @Get(':id')
-  async proFile(@Param() params): Promise<UserEntity> {
+  @Authorization(UserRole.Member)
+  @Get('member/:id')
+  async ff1(@Param() params): Promise<UserEntity> {
+    return await this.userService.findUserInfoById(params.id)
+  }
+
+  @Authorization(UserRole.Admin)
+  @Get('admin/:id')
+  async ff2(@Param() params): Promise<UserEntity> {
     return await this.userService.findUserInfoById(params.id)
   }
 }
