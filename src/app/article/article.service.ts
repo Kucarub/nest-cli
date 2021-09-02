@@ -1,4 +1,4 @@
-import { Injectable, Inject, ForbiddenException } from '@nestjs/common'
+import { Injectable, Inject, ForbiddenException, Optional } from '@nestjs/common'
 import { ArticleDto, ArticleCreateOrUpdateFormDto } from './article.dto'
 import { UserEntity, UserRole } from '@/entities/user.entity'
 import { ArticleType, ArticleEntity } from '@/entities/Article.entity'
@@ -8,7 +8,6 @@ import { InjectRepository } from '@nestjs/typeorm'
 @Injectable()
 export class ArticleService {
   constructor(
-    @InjectRepository(ArticleEntity)
     private readonly articleRepository: ArticleRepository,
   ) {
   }
@@ -31,8 +30,8 @@ export class ArticleService {
     }
     // this.verifyCoverAndFileIsExistOrThrowException(dto)
 
-    const article = this.articleRepository.create(dto)
-    // article.author = user
+    const article = await this.articleRepository.create(dto)
+    article.author = user
     return article.save()
   }
 }

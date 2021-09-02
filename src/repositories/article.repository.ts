@@ -7,7 +7,7 @@
 
 import { EntityRepository } from 'typeorm'
 import { MyRepository } from './base.repository'
-import { ArticleEntity } from '@/entities/article.entity'
+import { ArticleEntity } from '@/entities/Article.entity'
 
 @EntityRepository(ArticleEntity)
 export class ArticleRepository extends MyRepository<ArticleEntity> {}

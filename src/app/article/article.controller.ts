@@ -12,8 +12,7 @@ import { ArticleEntity } from '@/entities/Article.entity'
 @ApiUseTags('文章模块')
 export class ArticleController {
   constructor(
-    @InjectRepository(ArticleEntity)
-    private readonly authService: AuthService,
+    // @InjectRepository(ArticleEntity)
     private readonly articleService: ArticleService,
   ) {
   }

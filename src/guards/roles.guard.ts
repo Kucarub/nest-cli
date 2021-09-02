@@ -6,11 +6,9 @@
  */
 import { Injectable, CanActivate, ExecutionContext, ForbiddenException, UnauthorizedException } from '@nestjs/common'
 import { UserRole, UserEntity } from '@/entities/user.entity'
-import { JwtService } from '@nestjs/jwt'
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  private jwtService: JwtService
 
   constructor(
     private readonly role: UserRole,
@@ -18,19 +16,10 @@ export class RolesGuard implements CanActivate {
 
   }
 
-  verifyToken(token: string): void {
-    try {
-      this.jwtService.verify(token)
-    } catch (e) {
-      throw new UnauthorizedException()
-    }
-  }
-
   canActivate(context: ExecutionContext): boolean | Promise<boolean> {
     const request = context.switchToHttp().getRequest()
     const user: UserEntity = request.user
-    const token = request.header.token
-    this.verifyToken(token)
+    const token = request.headers.token
     // 如果用户角色低于要求的角色则拒绝访问
     if (user.role < this.role) {
       throw new ForbiddenException(

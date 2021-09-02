@@ -82,6 +82,6 @@ export class UserEntity extends BaseEntity {
   @Column('int', { name: 'sn', nullable: true, comment: '个人编号' })
   sn: number | null
 
-  @OneToMany(() => ArticleEntity, (article) => article.u)
+  @OneToMany(() => ArticleEntity, (article) => article.author)
   articles: ArticleEntity[]
 }

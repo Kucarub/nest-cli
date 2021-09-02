@@ -1,6 +1,6 @@
 import {
   BaseEntity,
-  Column,
+  Column, CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -22,13 +22,13 @@ export class ArticleEntity extends BaseEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number
 
-  @Column('datetime', {
+  @CreateDateColumn({
     name: 'create_time',
     comment: '创建时间',
   })
   createTime: Date
 
-  @Column('datetime', {
+  @CreateDateColumn({
     name: 'update_time',
     comment: '更新时间',
   })
@@ -37,6 +37,7 @@ export class ArticleEntity extends BaseEntity {
   @Column('tinyint', {
     name: 'is_active',
     comment: '状态，用于软删除',
+    default: () => 1,
   })
   isActive: number
 
@@ -66,7 +67,11 @@ export class ArticleEntity extends BaseEntity {
   })
   description: string | null
 
-  @Column('int', { name: 'score_value', comment: '分值' })
+  @Column('int', {
+    name: 'score_value',
+    comment: '分值',
+    default: 5,
+  })
   scoreValue: number
 
   @Column('text', { name: 'content', comment: 'markdown 内容' })
@@ -83,16 +88,18 @@ export class ArticleEntity extends BaseEntity {
   @Column('int', {
     name: 'view_num',
     comment: '查看次数',
+    default: 0,
   })
   viewNum: number
 
   @Column('int', {
     name: 'download_num',
     comment: '下载次数',
+    default: 0,
   })
   downloadNum: number
 
-  @Column('datetime', {
+  @CreateDateColumn({
     name: 'publish_time',
     comment: '发布时间',
   })
@@ -102,6 +109,9 @@ export class ArticleEntity extends BaseEntity {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT',
   })
-  @JoinColumn([{ name: 'uid', referencedColumnName: 'id' }])
-  u: UserEntity
+  @JoinColumn([{
+    name: 'uid',
+    referencedColumnName: 'id',
+  }])
+  author: UserEntity
 }
