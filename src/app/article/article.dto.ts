@@ -5,18 +5,10 @@ import { ArticleType, ArticleEntity } from '@/entities/article.entity'
 export class Pagination {
   @ApiModelProperty({ description: '页码', type: 'number', example: 1 })
   @IsNumber()
-  private pageNum: number
+  public pageNum: number
   @ApiModelProperty({ description: '条数', type: 'number', example: 10 })
   @IsNumber()
-  private pageSize: number
-  @ApiModelProperty({ description: '总页数', type: 'number', example: 10 })
-  @IsNumber()
-  private totalNum: number
-  @ApiModelProperty({ description: '总条数', type: 'number', example: 10 })
-  @IsNumber()
-  private totalRows: number
-  @ApiModelProperty({ description: '数据' })
-  public list?: any[]
+  public pageSize: number
 }
 
 /**
@@ -55,5 +47,13 @@ export class ArticleCreateOrUpdateFormDto {
   file?: string
 }
 
-export class ArticleDto extends Pagination {
+export class ArticleResultDto extends Pagination {
+  @ApiModelProperty({ description: '总页数', type: 'number', example: 10 })
+  @IsNumber()
+  private totalNum: number
+  @ApiModelProperty({ description: '总条数', type: 'number', example: 10 })
+  @IsNumber()
+  private totalRows: number
+  @ApiModelProperty({ description: '数据' })
+  public list?: any[]
 }

@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { ArticleService } from './article.service'
 import { AuthService } from '@/app/auth/auth.service'
 import { UserEntity, UserRole } from '@/entities/User.entity'
-import { ArticleCreateOrUpdateFormDto, ArticleDto } from './article.dto'
+import { ArticleCreateOrUpdateFormDto, ArticleResultDto, Pagination } from './article.dto'
 import { Authorization, UserParam } from '@/decorators/auth.decorator'
 import { ArticleEntity } from '@/entities/Article.entity'
 
@@ -17,16 +17,16 @@ export class ArticleController {
   ) {
   }
 
-  @Get('/')
+  @Post('/query')
   @Authorization(UserRole.Member)
-  @ApiOkResponse({ description: '返回文章列表', type: ArticleDto })
-  async queryArticleList(@Param() dto: ArticleDto): Promise<ArticleDto> {
-    return this.articleService.queryArticleList(dto)
+  @ApiOkResponse({ description: '返回文章列表', type: ArticleResultDto })
+  async queryArticleList(@Body() dto: Pagination): Promise<ArticleResultDto> {
+    return await this.articleService.queryArticleList(dto)
   }
 
   @Post('/save')
   @Authorization(UserRole.Member)
-  @ApiOkResponse({ description: '返回文章列表', type: ArticleDto })
+  @ApiOkResponse({ description: '返回文章列表', type: ArticleEntity })
   async publishArticle(@UserParam() user: UserEntity, @Body() dto: ArticleCreateOrUpdateFormDto): Promise<ArticleEntity> {
     return await this.articleService.createArticle(user, dto)
   }

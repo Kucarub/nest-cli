@@ -1,9 +1,9 @@
-import { Injectable, Inject, ForbiddenException, Optional } from '@nestjs/common'
-import { ArticleDto, ArticleCreateOrUpdateFormDto } from './article.dto'
+import { ForbiddenException, Injectable } from '@nestjs/common'
+import { ArticleCreateOrUpdateFormDto, Pagination, ArticleResultDto } from './article.dto'
 import { UserEntity, UserRole } from '@/entities/user.entity'
-import { ArticleType, ArticleEntity } from '@/entities/Article.entity'
+import { ArticleEntity, ArticleType } from '@/entities/Article.entity'
 import { ArticleRepository } from '@/repositories/article.repository'
-import { InjectRepository } from '@nestjs/typeorm'
+import { plainToClass, classToPlain } from 'class-transformer'
 
 @Injectable()
 export class ArticleService {
@@ -15,8 +15,31 @@ export class ArticleService {
   /**
    * 条件搜索返回文章列表
    */
-  async queryArticleList(dto: ArticleDto): Promise<ArticleDto> {
-    return
+  async queryArticleList(dto: Pagination): Promise<ArticleResultDto> {
+    const [res, count] = await this.articleRepository
+      .createQueryBuilder('a')
+      .leftJoin('a.author', 'u')
+      .select([
+        'a.id',
+        'a.title',
+        'a.type',
+        'a.cover',
+        'a.description',
+        'a.viewNum',
+        'a.publishTime',
+        'u.username as author',
+      ])
+      .orderBy('a.publishTime', 'ASC')
+      .take(dto.pageSize)
+      .skip(dto.pageSize * (dto.pageNum - 1))
+      .getManyAndCount()
+    return plainToClass(ArticleResultDto, {
+      pageNum: dto.pageNum,
+      pageSize: dto.pageSize,
+      totalRows: count,
+      totalNum: Math.ceil(count / dto.pageSize),
+      list: res,
+    })
   }
 
   /**

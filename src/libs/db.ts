@@ -18,7 +18,7 @@ export const typeOrmOptions: TypeOrmModuleOptions = {
   password: config.MYSQL.PASSWORD,
   database: config.MYSQL.DATABASE,
   synchronize: true,
-  logging: false,
+  logging: ['query', 'error'],
   entities: [join(__dirname, '..', 'entities', '*.entity.{ts,js}')],
 }
 

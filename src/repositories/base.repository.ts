@@ -20,6 +20,7 @@ export abstract class MyRepository<E> extends BaseRepository<E> {
   getRepository(): Repository<E> {
     return this.repository
   }
+
   getManager(): EntityManager {
     return this.manager
   }
@@ -33,6 +34,10 @@ export abstract class MyRepository<E> extends BaseRepository<E> {
   create(entityLikeArray: Array<DeepPartial<E>>): E[]
   create(plainEntityLikeOrPlainEntityLikes?: DeepPartial<E> | Array<DeepPartial<E>>): E | E[] {
     return this.repository.create(plainEntityLikeOrPlainEntityLikes as any)
+  }
+
+  async query(query: string): Promise<E | E[]> {
+    return this.repository.query(query)
   }
 
   /**
@@ -121,6 +126,7 @@ export abstract class MyRepository<E> extends BaseRepository<E> {
   createQueryBuilder(alias: string): SelectQueryBuilder<E> {
     return this.repository.createQueryBuilder(alias)
   }
+
   // ========================== END: 重写存储库方法 ==============================
 
   // ========================== START: 工具函数 ===============================
@@ -157,5 +163,6 @@ export abstract class MyRepository<E> extends BaseRepository<E> {
   protected getNotFoundMessage(): string {
     return `Not found the \`${this.repository.metadata.name}\``
   }
+
   // ========================== END: 工具函数 ===============================
 }
