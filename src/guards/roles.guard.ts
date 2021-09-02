@@ -18,7 +18,7 @@ export class RolesGuard implements CanActivate {
 
   }
 
-  test(token: string): void {
+  verifyToken(token: string): void {
     try {
       this.jwtService.verify(token)
     } catch (e) {
@@ -30,7 +30,7 @@ export class RolesGuard implements CanActivate {
     const request = context.switchToHttp().getRequest()
     const user: UserEntity = request.user
     const token = request.header.token
-    this.test(token)
+    this.verifyToken(token)
     // 如果用户角色低于要求的角色则拒绝访问
     if (user.role < this.role) {
       throw new ForbiddenException(

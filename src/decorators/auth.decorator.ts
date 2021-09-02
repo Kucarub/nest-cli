@@ -3,7 +3,7 @@ import { AuthGuard } from '@nestjs/passport'
 
 import { RolesGuard } from '@/guards/roles.guard'
 import { UserRole } from '@/entities/user.entity'
-import { JwtService } from '@nestjs/jwt'
+
 /**
  * 认证及角色守卫
  * 要求：使用的模块必须导入 `AuthModule`
@@ -18,3 +18,13 @@ export function Authorization(role = UserRole.Member): MethodDecorator {
     new RolesGuard(role),
   )
 }
+
+/**
+ * 向参数注入当前 token 对应的用户实体
+ *
+ * 要求：使用该装饰器的控制器方法必须前置 `Authorization` 方法装饰器用于解析 token，否则你将得到一个 `undfined`
+ * @typedef createParamDecorator
+ */
+export const UserParam = createParamDecorator((data, req) => {
+  return req.user
+})

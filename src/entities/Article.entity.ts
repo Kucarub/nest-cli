@@ -8,6 +8,15 @@ import {
 } from 'typeorm'
 import { UserEntity } from './User.entity'
 
+export enum ArticleType {
+  JQUERY = 'jquery',
+  VUE = 'vue',
+  REACT = 'react',
+  SERVER = 'server',
+  NPM = 'npm',
+  COMMON = 'common',
+}
+
 @Entity('article', { schema: 'dbnest' })
 export class ArticleEntity extends BaseEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
@@ -34,9 +43,9 @@ export class ArticleEntity extends BaseEntity {
   @Column('enum', {
     name: 'type',
     comment: '分类',
-    enum: ['jquery', 'vue', 'react', 'server', 'npm', 'common'],
+    enum: ArticleType,
   })
-  type: 'jquery' | 'vue' | 'react' | 'server' | 'npm' | 'common'
+  type: ArticleType
 
   @Column('varchar', { name: 'title', comment: '标题', length: 64 })
   title: string
