@@ -27,6 +27,12 @@ export interface AppConfig {
   readonly STATIC_SITE_PREFIX: string
   // 文档站点前缀
   readonly DOC_SITE_PREFIX: string
+  // 日志站点前缀
+  readonly LOG_SITE_PREFIX: string
+  // 文件存储站点前缀
+  readonly FILE_SITE_PREFIX: string
+  // 工具站点前缀
+  readonly KIT_SITE_PREFIX: string
 }
 
 // 程序在本地运行的配置
@@ -42,8 +48,11 @@ export class LocalEnvAppConfig implements AppConfig {
   TOKEN_EXPIRES = 24 * 3600 // 24h
   ROOT_LOCAL_PATH = join(__dirname, '..', '..', '..')
   STATIC_LOCAL_PATH = join(this.ROOT_LOCAL_PATH, 'data', 'oss')
-  STATIC_SITE_PREFIX = '/oss'
-  DOC_SITE_PREFIX = '/doc'
+  STATIC_SITE_PREFIX = 'oss'
+  DOC_SITE_PREFIX = 'doc'
+  LOG_SITE_PREFIX = 'log'
+  FILE_SITE_PREFIX = 'file'
+  KIT_SITE_PREFIX = 'kit'
 }
 
 // 程序在 docker 内运行的配置

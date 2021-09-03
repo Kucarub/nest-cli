@@ -14,6 +14,7 @@ import { typeOrmOptions, redisOptions } from '@/libs/db'
 import { UserModule } from './user/user.module'
 import { AuthModule } from './auth/auth.module'
 import { ArticleModule } from './article/article.module'
+import { UploadModule } from './upload/upload.module'
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ArticleModule } from './article/article.module'
     UserModule,
     AuthModule,
     ArticleModule,
+    UploadModule,
   ],
   controllers: [],
   providers: [],

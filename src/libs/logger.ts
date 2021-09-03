@@ -9,10 +9,11 @@ import { appendFileSync } from 'fs'
 import * as shell from 'shelljs'
 import * as Moment from 'moment'
 import { config } from '@/config'
+import * as path from 'path'
 
-shell.mkdir('-p', config.APP.STATIC_LOCAL_PATH)
+shell.mkdir('-p', path.join(config.APP.STATIC_LOCAL_PATH, config.APP.LOG_SITE_PREFIX))
 
-const LOGGER_FILE = join(config.APP.STATIC_LOCAL_PATH, '.log')
+const LOGGER_FILE = join(config.APP.STATIC_LOCAL_PATH, config.APP.LOG_SITE_PREFIX, '.log')
 
 export default class Logger {
   static append(str: string) {
