@@ -1,4 +1,4 @@
-/*
+  /*
  * @Author: Cphayim
  * @Date: 2019-07-12 09:47:06
  * @LastEditTime: 2019-07-12 15:38:27
@@ -39,6 +39,11 @@ export async function bootstrap(): Promise<void> {
 function registerGlobalPlugins(app: NestApplication | NestExpressApplication) {
   // 启用 cors
   app.enableCors()
+  // 启用静态资源服务
+  app.useStaticAssets(config.APP.STATIC_LOCAL_PATH, {
+    // 静态资源站点的前缀
+    prefix: config.APP.STATIC_SITE_PREFIX,
+  })
   // 全局异常处理过滤器
   app.useGlobalFilters(new HttpExceptionFilter())
   // 全局响应拦截器

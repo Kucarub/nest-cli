@@ -48,11 +48,11 @@ export class LocalEnvAppConfig implements AppConfig {
   TOKEN_EXPIRES = 24 * 3600 // 24h
   ROOT_LOCAL_PATH = join(__dirname, '..', '..', '..')
   STATIC_LOCAL_PATH = join(this.ROOT_LOCAL_PATH, 'data', 'oss')
-  STATIC_SITE_PREFIX = 'oss'
-  DOC_SITE_PREFIX = 'doc'
-  LOG_SITE_PREFIX = 'log'
-  FILE_SITE_PREFIX = 'file'
-  KIT_SITE_PREFIX = 'kit'
+  STATIC_SITE_PREFIX = '/oss'
+  DOC_SITE_PREFIX = '/doc'
+  LOG_SITE_PREFIX = '/log'
+  FILE_SITE_PREFIX = '/file'
+  KIT_SITE_PREFIX = '/kit'
 }
 
 // 程序在 docker 内运行的配置

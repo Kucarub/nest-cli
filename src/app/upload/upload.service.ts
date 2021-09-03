@@ -12,17 +12,8 @@ import { UserEntity } from '@/entities/User.entity'
 
 @Injectable()
 export class UploadService {
-  // 工具允许的压缩包类型
-  private readonly KIT_ALLOW_MIMETYPES = new Set([
-    'application/zip', // mac/linux .zip
-    'application/x-zip-compressed', // windows .zip
-    'application/x-tar', // .tar
-    'application/x-7z-compressed', // .7z
-    'application/x-gzip', // .gz .tgz
-  ])
-
   constructor() {
-    this.initDirectory()
+    UploadService.initDirectory()
   }
 
   /**
@@ -42,8 +33,8 @@ export class UploadService {
     const fileName = UploadService.fileRename(file)
     const fileTarget = path.join(config.APP.STATIC_LOCAL_PATH, config.APP.FILE_SITE_PREFIX, fileName)
     fs.writeFileSync(fileTarget, file.buffer)
-    const fileUrl = path.join(config.APP.STATIC_LOCAL_PATH, config.APP.FILE_SITE_PREFIX, fileName)
-    Logger.append(`uploadFile<uid:${user.id}>:<username:${user.username}><fileName:${fileName}>`)
+    const fileUrl = path.join(config.APP.STATIC_SITE_PREFIX, config.APP.FILE_SITE_PREFIX, fileName)
+    Logger.append(`uploadFile<uid:${user.id}>:<username:${user.username}><fileName:${fileName}><fileUrl:${fileUrl}>`)
     return plainToClass(SaveResultDto, {
       result: true,
       url: fileUrl,
@@ -53,7 +44,7 @@ export class UploadService {
   /**
    * 初始化目录，不存在则创建
    */
-  private initDirectory() {
+  private static initDirectory() {
     shell.mkdir('-p', path.join(config.APP.STATIC_LOCAL_PATH, config.APP.FILE_SITE_PREFIX))
     shell.mkdir('-p', path.join(config.APP.STATIC_LOCAL_PATH, config.APP.KIT_SITE_PREFIX))
   }
