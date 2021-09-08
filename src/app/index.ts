@@ -15,6 +15,7 @@ import { UserModule } from './user/user.module'
 import { AuthModule } from './auth/auth.module'
 import { ArticleModule } from './article/article.module'
 import { UploadModule } from './upload/upload.module'
+import { VideoModule } from './video/video.module'
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { UploadModule } from './upload/upload.module'
     AuthModule,
     ArticleModule,
     UploadModule,
+    VideoModule,
   ],
   controllers: [],
   providers: [],
