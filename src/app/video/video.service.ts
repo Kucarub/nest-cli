@@ -12,13 +12,13 @@ export class VideoService {
     const filePath = path.join(config.APP.STATIC_LOCAL_PATH, config.APP.FILE_SITE_PREFIX, 'video1631071752163.mp4')
     const imgPath = path.join(config.APP.STATIC_LOCAL_PATH, config.APP.FILE_SITE_PREFIX, 'p305782481630653919894.jpg')
     const outPath = path.join(config.APP.STATIC_LOCAL_PATH, config.APP.FILE_SITE_PREFIX, 'out.mp4')
-    await VideoService.initFfmpeg(filePath, outPath)
+    // await VideoService.textWaterMarked(filePath, outPath)
+    const pp = await VideoService.imageWaterMarked(filePath, imgPath, outPath)
     // await VideoService.imageToVideo(imgPath, outPath)
-    // return res.sendFile(outPath)
-    return ''
+    return res.sendFile(pp)
   }
 
-  private static async initFfmpeg(inputPath: string, outPath: string): Promise<any> {
+  private static async textWaterMarked(inputPath: string, outPath: string): Promise<any> {
     try {
       const command = new Ffmpeg({
         source: inputPath,
@@ -47,5 +47,26 @@ export class VideoService {
         console.log('an error happened: ' + err.message)
       })
       .saveToFile(outPath)
+  }
+
+  private static async imageWaterMarked(inputVideoPath: string, inputImgPath: string, outPath: string): Promise<Promise<any>> {
+    try {
+      return new Promise<any>((resolve => {
+        new Ffmpeg({
+          source: inputVideoPath,
+          nolog: true,
+        }).setFfmpegPath(ffmpegPath)
+          .input(inputImgPath)
+          .inputOptions('-filter_complex', 'overlay=10:10')
+          .on('end', () => {
+            console.log('file has been converted succesfully')
+            resolve(outPath)
+          }).on('error', (err) => {
+          console.log('an error happened: ' + err.message)
+        }).saveToFile(outPath)
+      }))
+    } catch (e) {
+      throw new Error(e)
+    }
   }
 }
