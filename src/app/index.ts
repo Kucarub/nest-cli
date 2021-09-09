@@ -16,6 +16,7 @@ import { AuthModule } from './auth/auth.module'
 import { ArticleModule } from './article/article.module'
 import { UploadModule } from './upload/upload.module'
 import { VideoModule } from './video/video.module'
+import { CommonModule } from './common/common.module'
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { VideoModule } from './video/video.module'
     ArticleModule,
     UploadModule,
     VideoModule,
+    CommonModule,
   ],
   controllers: [],
   providers: [],
