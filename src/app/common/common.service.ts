@@ -41,8 +41,8 @@ export class CommonService {
   }
 
   async test(): Promise<any> {
-    await this.cacheService.set('test', '1')
-    return await this.cacheService.get('test')
+    // await this.cacheService.set('test', '1')
+    // return await this.cacheService.get('test')
     // return 'success'
   }
 

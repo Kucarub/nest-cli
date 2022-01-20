@@ -7,14 +7,14 @@ import Logger from '@/libs/logger'
 export class CacheService {
   private client: any
 
-  constructor(private redisService: RedisService) {
+  /*constructor(private redisService: RedisService) {
     this.getClient().then(r => {
       console.info('redis')
     })
-  }
+  }*/
 
   private async getClient() {
-    this.client = await this.redisService.getClient()
+    // this.client = await this.redisService.getClient()
   }
 
   /**

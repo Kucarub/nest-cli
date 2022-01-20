@@ -14,6 +14,7 @@ import { TransformInterceptor } from './interceptors/transform.interceptor'
 
 import { config } from './config'
 import { AppModule } from './app'
+import { WsAdapter } from '@/app/websocket/ws.adapter'
 
 // 是否是开发环境
 const IS_DEV = config.APP.ENV === 'development'
@@ -57,6 +58,7 @@ function registerGlobalPlugins(app: NestApplication | NestExpressApplication) {
       validationError: { target: false },
     }),
   )
+  // app.useWebSocketAdapter(new WsAdapter(app))
 }
 
 /**

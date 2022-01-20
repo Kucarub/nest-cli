@@ -7,6 +7,7 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { RedisModule } from 'nestjs-redis'
+import { EventsModule } from '@/app/websocket/events.module'
 
 import { LoggerMiddleware } from '@/middlewares/logger.middleware'
 import { typeOrmOptions, redisOptions } from '@/libs/db'
@@ -15,6 +16,7 @@ import { UserModule } from './user/user.module'
 import { AuthModule } from './auth/auth.module'
 import { ArticleModule } from './article/article.module'
 import { UploadModule } from './upload/upload.module'
+import { OcrModule } from './ocr/ocr.module'
 import { VideoModule } from './video/video.module'
 import { CommonModule } from './common/common.module'
 
@@ -24,11 +26,13 @@ import { CommonModule } from './common/common.module'
     TypeOrmModule.forRoot(typeOrmOptions),
     // Redis 连接模块
     // RedisModule.register(redisOptions),
+    // EventsModule,
     // 子模块
     UserModule,
     AuthModule,
     ArticleModule,
     UploadModule,
+    OcrModule,
     VideoModule,
     CommonModule,
   ],

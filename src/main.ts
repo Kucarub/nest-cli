@@ -1,8 +1,7 @@
-/*
- * @Author: Cphayim
- * @Date: 2019-07-06 16:55:14
- * @LastEditTime: 2019-07-12 09:47:49
- * @Description: 应用入口
+/**
+ * @Author: clark
+ * @Description:应用入口
+ * @LastEditTime:2022-01-20 10:01:27
  */
 import { bootstrap } from './bootstrap'
 
