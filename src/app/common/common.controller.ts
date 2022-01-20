@@ -21,4 +21,12 @@ export class CommonController {
   async uploadFiles(@UserParam() user: UserEntity, @UploadedFiles() files: FileDto[]): Promise<CommonDto[]> {
     return await this.commonService.inputExcels(user, files)
   }
+
+  @Get('/test')
+  // @Authorization(UserRole.Member)
+  @ApiOkResponse({ description: 'test' })
+  @ApiBadRequestResponse({ description: 'test' })
+  async test(): Promise<any> {
+    return await this.commonService.test()
+  }
 }

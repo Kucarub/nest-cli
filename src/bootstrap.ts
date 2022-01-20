@@ -1,9 +1,9 @@
-  /*
- * @Author: Cphayim
- * @Date: 2019-07-12 09:47:06
- * @LastEditTime: 2019-07-12 15:38:27
- * @Description: 启动器
- */
+/*
+* @Author: Cphayim
+* @Date: 2019-07-12 09:47:06
+* @LastEditTime: 2019-07-12 15:38:27
+* @Description: 启动器
+*/
 import { NestFactory, NestApplication } from '@nestjs/core'
 import { ValidationPipe } from '@nestjs/common'
 import { NestExpressApplication } from '@nestjs/platform-express'
@@ -29,7 +29,7 @@ export async function bootstrap(): Promise<void> {
   if (IS_DEV) {
     genSwaggerDocument(app)
   }
-  await app.listen(config.APP.LISTEN_PORT,() => process.stdout.write(`Server launched!🚀\n`))
+  await app.listen(config.APP.LISTEN_PORT, () => process.stdout.write(`Server launched!🚀\n`))
 }
 
 /**
@@ -58,6 +58,7 @@ function registerGlobalPlugins(app: NestApplication | NestExpressApplication) {
     }),
   )
 }
+
 /**
  * 生成 Swagger API 文档
  * @param {NestApplication | NestExpressApplication} app
