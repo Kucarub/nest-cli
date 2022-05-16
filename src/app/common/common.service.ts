@@ -76,6 +76,14 @@ export class CommonService {
   }
 
   /**
+   * 复制内容到剪贴板
+   * @param {any} text
+   */
+  copyToClipboard(text) {
+    navigator.clipboard.writeText(text)
+  }
+
+  /**
    * 休眠xxx ms
    * @param {Number} milliseconds
    */
@@ -134,6 +142,15 @@ export class CommonService {
         }
       }
     })
+  }
+
+  /**
+   * 求两天之间的天数
+   * @param { date } date1
+   * @param { date } date2
+   */
+  dayDif(date1, date2) {
+    Math.ceil(Math.abs(date1.getTime() - date2.getTime()) / 86400000)
   }
 
   /**
@@ -491,5 +508,51 @@ export class CommonService {
       window.requestAnimationFrame(this.scrollToTop)
       window.scrollTo(0, c - c / 8)
     }
+  }
+
+  /**
+   * @Author: clark
+   * @Description: input format number， add num and avoid float number
+   * @CreateTime:2022-05-13 08:51:09
+   */
+  formatNumber(value: any, allowDot: boolean, allowMinus: boolean): string {
+    if (allowDot === void 0) {
+      allowDot = true
+    }
+    if (allowMinus === void 0) {
+      allowMinus = true
+    }
+    if (allowDot) {
+      value = this.trimExtraChar(value, '.', /\./g)
+    } else {
+      value = value.split('.')[0]
+    }
+    if (allowMinus) {
+      value = this.trimExtraChar(value, '-', /-/g)
+    } else {
+      value = value.replace(/-/, '')
+    }
+    const regExp = allowDot ? /[^-0-9.]/g : /[^-0-9]/g
+    return value.replace(regExp, '')
+  }
+
+  // tslint:disable-next-line:variable-name
+  trimExtraChar(value, _char, regExp) {
+    const index = value.indexOf(_char)
+    let prefix = ''
+
+    if (index === -1) {
+      return value
+    }
+
+    if (_char === '-' && index !== 0) {
+      return value.slice(0, index)
+    }
+
+    if (_char === '.' && value.match(/^(\.|-\.)/)) {
+      prefix = index ? '-0' : '0'
+    }
+
+    return prefix + value.slice(0, index + 1) + value.slice(index).replace(regExp, '')
   }
 }

@@ -31,6 +31,7 @@
     "@nestjs/swagger": "^3.1.0",
     "@nestjs/typeorm": "^6.3.4",
     "@nestjs/websockets": "^8.2.5",
+    "@tarnish/listnode": "^1.0.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.9.1",
     "dotenv": "^8.2.0",

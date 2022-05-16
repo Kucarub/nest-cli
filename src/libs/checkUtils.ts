@@ -126,3 +126,8 @@ export const isCorrectFormatPassword = value => /^\S*(?=\S{6,})(?=\S*\d)(?=\S*[A
  * @param { string } value
  */
 export const isPostcode = value => /^(0[1-7]|1[0-356]|2[0-7]|3[0-6]|4[0-7]|5[1-7]|6[1-7]|7[0-5]|8[013-6])\d{4}$/g.test(value)
+/**
+ * 检查日期是否有效
+ * @param { string } val
+ */
+const isDateValid = (val) => !Number.isNaN(new Date(val).valueOf())
