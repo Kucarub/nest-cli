@@ -10,6 +10,12 @@ export interface FileDto {
   buffer: Buffer
 }
 
+export interface BigFileDto {
+  fileName: string
+  fileHash: string
+  fileIndex: string
+}
+
 /**
  * 文件保存结果 DTO
  * @Response
@@ -36,4 +42,18 @@ export class FileExistDto {
   @ApiModelProperty({ description: '文件地址' })
   @IsString()
   fileUrl: string
+}
+
+/**
+ * 切片合并 DTO
+ * @Request
+ */
+export class BigFileExistDto {
+  @ApiModelProperty({ description: '文件夹的hash' })
+  @IsString()
+  fileHash: string
+
+  @ApiModelProperty({ description: '切片的大小' })
+  @IsNumber()
+  chunkSize: number
 }

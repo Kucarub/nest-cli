@@ -4,7 +4,7 @@ import { UserRole, UserEntity } from '@/entities/user.entity'
 import { UploadService } from './upload.service'
 import { Authorization, UserParam } from '@/decorators/auth.decorator'
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express'
-import { FileDto, SaveResultDto } from '@/app/upload/upload.dto'
+import { FileDto, SaveResultDto, BigFileDto, BigFileExistDto } from '@/app/upload/upload.dto'
 
 @Controller('/upload')
 @ApiUseTags('上传模块')
@@ -19,5 +19,22 @@ export class UploadController {
   @ApiBadRequestResponse({ description: '上传失败' })
   async uploadFiles(@UserParam() user: UserEntity, @UploadedFiles() files: FileDto[]): Promise<SaveResultDto[]> {
     return await this.uploadService.saveFiles(user, files)
+  }
+
+  @Post('/uploadBigFile')
+  // @Authorization(UserRole.Member)
+  @UseInterceptors(FilesInterceptor('file'))
+  @ApiOkResponse({ description: '上传成功' })
+  @ApiBadRequestResponse({ description: '上传失败' })
+  async uploadBigFile(@UploadedFiles() file: FileDto, @Body() dto: BigFileDto): Promise<SaveResultDto> {
+    return await this.uploadService.saveBigFile(file[0], dto)
+  }
+
+  @Post('/mergeChunks')
+  // @Authorization(UserRole.Member)
+  @ApiOkResponse({ description: '操作成功' })
+  @ApiBadRequestResponse({ description: '操作失败' })
+  async mergeChunks(@Body() body: BigFileExistDto): Promise<void> {
+    return await this.uploadService.mergeFileChunk(body.fileHash, body.chunkSize)
   }
 }
