@@ -7,6 +7,7 @@ import * as fs from 'fs'
 import xlsx from 'node-xlsx'
 import { UploadService } from '@/app/upload/upload.service'
 import { CacheService } from '@/app/cache/cache.service'
+import * as officegen from 'officegen'
 
 @Injectable()
 export class CommonService {
@@ -38,6 +39,26 @@ export class CommonService {
     const filePath = path.join(config.APP.ROOT_LOCAL_PATH, 'data', url)
     const workSheetsFromBuffer = xlsx.parse(fs.readFileSync(filePath))
     console.log(workSheetsFromBuffer)
+  }
+
+  async outputDoc(): Promise<any> {
+    const docx = officegen('docx')
+    docx.on('finalize', (written) => {
+      console.log(
+        'Finish to create a Microsoft Word document.',
+      )
+    })
+    const pObj = docx.createP()
+    pObj.addText('Simple')
+    pObj.addText(' with color', { color: '000088' })
+    pObj.addText(' and back color.', { color: '00ffff', back: '000088' })
+    const fileTarget = path.join(config.APP.STATIC_LOCAL_PATH, config.APP.FILE_SITE_PREFIX)
+    const out = fs.createWriteStream(path.join(fileTarget, 'example.docx'))
+    docx.generate(out)
+    out.on('error', (err) => {
+      console.log(err)
+    })
+    return path.join(fileTarget, 'example.docx')
   }
 
   async test(): Promise<any> {
